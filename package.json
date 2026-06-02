@@ -1,0 +1,70 @@
+{
+  "name": "@kieusonlam/wp-acf",
+  "version": "0.3.0",
+  "description": "Read Advanced Custom Fields data from a WordPress database in Node.js / TypeScript — full support for repeater, flexible content, group, clone, gallery, post object, taxonomy, user, date, link, and ACF Pro option pages.",
+  "license": "MIT",
+  "author": "Lâm Kiều <rainbow.lam25@gmail.com>",
+  "homepage": "https://github.com/kieusonlam/wp-acf#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kieusonlam/wp-acf.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kieusonlam/wp-acf/issues"
+  },
+  "keywords": [
+    "wordpress",
+    "acf",
+    "advanced-custom-fields",
+    "headless",
+    "headless-wordpress",
+    "repeater",
+    "flexible-content",
+    "typescript",
+    "nodejs"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./fields": {
+      "types": "./dist/fields/index.d.ts",
+      "import": "./dist/fields/index.js",
+      "require": "./dist/fields/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf dist .turbo",
+    "prepublishOnly": "pnpm run build"
+  },
+  "peerDependencies": {
+    "@kieusonlam/wp-core": "^0.3.0"
+  },
+  "dependencies": {
+    "luxon": "^3.5.0"
+  },
+  "devDependencies": {
+    "@kieusonlam/wp-core": "^0.3.0",
+    "@types/luxon": "^3.4.2",
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "rimraf": "^6.0.1"
+  }
+}
