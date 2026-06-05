@@ -1,6 +1,6 @@
 {
   "name": "@kieusonlam/wp-acf",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Read Advanced Custom Fields data from a WordPress database in Node.js / TypeScript — full support for repeater, flexible content, group, clone, gallery, post object, taxonomy, user, date, link, and ACF Pro option pages.",
   "license": "MIT",
   "author": "Lâm Kiều <rainbow.lam25@gmail.com>",
@@ -57,13 +57,13 @@
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
-    "@kieusonlam/wp-core": "^0.4.0"
+    "@kieusonlam/wp-core": "^0.5.0"
   },
   "dependencies": {
     "luxon": "^3.5.0"
   },
   "devDependencies": {
-    "@kieusonlam/wp-core": "^0.4.0",
+    "@kieusonlam/wp-core": "^0.5.0",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.10.0",
     "tsup": "^8.3.0",

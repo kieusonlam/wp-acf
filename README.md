@@ -61,6 +61,7 @@ for (const s of sections) {
   - [Flexible Content](#flexible-field)
   - [Clone](#clone-field)
 - [Option pages](#option-pages)
+- [Term fields (category / product_cat)](#term-fields)
 - [Field config sources (DB vs registry)](#field-configs)
 - [Bulk resolve + serializing to JSON](#bulk-resolve)
 - [TypeScript](#typescript)
@@ -432,6 +433,35 @@ const layout = await dashboard.select('layout_mode');
   { "index": 2, "platform": "linkedin",  "url": "https://linkedin.com/company/potech", "label": "LinkedIn" }
 ]
 ```
+
+---
+
+<a id="term-fields"></a>
+## 🏷 Term fields (category / product_cat / …)
+
+ACF fields attached to a **taxonomy term** live in `wp_termmeta` (same shape as postmeta). Since wp-core 0.5.0 a `Taxonomy` is a `MetaSource`, so wrap it with `acfTerm()` — same API as posts and option pages:
+
+```ts
+import { Category, Taxonomy } from '@kieusonlam/wp-core';
+import { acfTerm } from '@kieusonlam/wp-acf';
+
+// Built-in taxonomies:
+const cat = await Category.slugInCategory('tin-tuc');        // → Taxonomy | null
+
+// Custom taxonomies (WooCommerce product_cat, etc.) — find the term first:
+const pcat = await Taxonomy.slug('product_cat', 'den-led-nha-xuong');
+
+if (cat) {
+  const acf = acfTerm(cat);
+  await acf.text('cat_content');     // wysiwyg → HTML string
+  await acf.repeater('faq');         // → RepeaterLayout[]  e.g. [{ question, answer }]
+  await acf.image('cat_thumbnail');  // → Attachment | null
+}
+```
+
+You can also do `new Acf(cat)` directly — `acfTerm()` is just the readable alias (mirrors `acfOptions()`). The first read loads the term's whole `wp_termmeta` in one query and caches it, so a repeater with many rows doesn't N+1.
+
+> The term must be a `Taxonomy` with its `wp_terms` row loaded — i.e. the result of `Category.slugInCategory()`, `Taxonomy.slug()`, `Taxonomy.named()`, or `Taxonomy.find()`. (These all eager-load `.term`.)
 
 ---
 

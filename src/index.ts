@@ -18,10 +18,17 @@
  *   // ACF Option pages
  *   const site = acfOptions();
  *   const phone = await site.text('site_phone');
+ *
+ *   // ACF gắn trên taxonomy term (category / product_cat / ...)
+ *   import { Category } from '@kieusonlam/wp-core';
+ *   import { acfTerm } from '@kieusonlam/wp-acf';
+ *   const cat = await Category.slugInCategory('tin-tuc');
+ *   const intro = cat ? await acfTerm(cat).text('cat_content') : '';
  */
 
 export { Acf } from './acf.js';
 export { acfOptions, AcfOptionSource } from './option.js';
+export { acfTerm } from './term.js';
 export { FieldResolver } from './field-resolver.js';
 export {
   registerFieldConfigs,

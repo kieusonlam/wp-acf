@@ -1,5 +1,30 @@
 # @kieusonlam/wp-acf
 
+## 0.5.0
+
+### Minor changes
+
+- **New: `acfTerm(taxonomy)` — read ACF fields attached to a taxonomy term** (category, `post_tag`, `product_cat`, custom taxonomies). ACF stores term fields in `wp_termmeta`; with wp-core 0.5.0 a `Taxonomy` is now a `MetaSource`, so the existing `Acf` engine reads them with no special-casing — `acfTerm()` is a thin helper mirroring `acfOptions()`.
+
+  ```ts
+  import { Category } from '@kieusonlam/wp-core';
+  import { acfTerm } from '@kieusonlam/wp-acf';
+
+  const cat = await Category.slugInCategory('tin-tuc'); // Taxonomy
+  if (cat) {
+    const acf  = acfTerm(cat);
+    const html = await acf.text('cat_content');   // wysiwyg → HTML
+    const faq  = await acf.repeater('faq');       // [{ question, answer }, ...]
+    const img  = await acf.image('cat_thumbnail');
+  }
+  ```
+
+  All field types (repeater, group, gallery, relationship, …) work as on posts/options. The first read loads the term's full `wp_termmeta` in one query (cached), so repeaters don't N+1.
+
+- Bumps `@kieusonlam/wp-core` peer dependency to `^0.5.0` (requires the term-meta accessor `acfTerm` relies on). Coordinated release with wp-core 0.5.0 + wp-woocommerce 0.5.0.
+
+  When upgrading: `pnpm add @kieusonlam/wp-core@^0.5.0 @kieusonlam/wp-acf@^0.5.0`.
+
 ## 0.4.0
 
 ### Patch changes
